@@ -19,21 +19,9 @@
             }
         },
         {
-            "label": "OCaml",
-            "type": "shell",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "windows": {
-                "command": "ocaml -init \\\"${file}\\\""
-                },
-            "linux": {
-                "command": "ocaml -init \"${file}\""
-            },
-            "osx": {
-                "command": "ocaml -init \"${file}\""
-            }
+            "label": "OCaml",  
+            "type": "shell",  
+            "command":  "C:\\OCaml64\\usr\\local\\bin\\ocaml-env.exe exec -- C:\\OCAML64\\HOME\\Uporabnik\\.OPAM\\4.11.1+MINGW64C\\BIN\\OCAML.EXE -init \\\"${file}\\\""
         }
     ]
 }
