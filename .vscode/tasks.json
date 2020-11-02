@@ -9,8 +9,8 @@
                 "isDefault": true
             },
             "windows": {
-                "command": "python -i \\\"${file}\\\""
-                },
+                "command":  "C:\\OCaml64\\usr\\local\\bin\\ocaml-env.exe exec -- C:\\OCAML64\\HOME\\Uporabnik\\.OPAM\\4.11.1+MINGW64C\\BIN\\OCAML.EXE -init \\\"${file}\\\""                
+            },
             "linux": {
                 "command": "python -i \"${file}\""
             },
@@ -18,10 +18,5 @@
                 "command": "python -i \"${file}\""
             }
         },
-        {
-            "label": "OCaml",  
-            "type": "shell",  
-            "command":  "C:\\OCaml64\\usr\\local\\bin\\ocaml-env.exe exec -- C:\\OCAML64\\HOME\\Uporabnik\\.OPAM\\4.11.1+MINGW64C\\BIN\\OCAML.EXE -init \\\"${file}\\\""
-        }
     ]
 }
