@@ -101,7 +101,12 @@ let rec double sez =
  - : int list = [1; 0; 0; 0; 0; 0]
 [*----------------------------------------------------------------------------*)
 
-let rec insert x k sez = ()
+let rec insert x k sez = 
+  match sez with
+    | [] -> [x]
+    | head :: tail -> 
+      if k <= 0 then x :: head :: tail 
+      else head :: insert x (k-1) tail
   
 (*----------------------------------------------------------------------------*]
  Funkcija [divide k list] seznam razdeli na dva seznama. Prvi vsebuje prvih [k]
@@ -114,7 +119,13 @@ let rec insert x k sez = ()
  - : int list * int list = ([1; 2; 3; 4; 5], [])
 [*----------------------------------------------------------------------------*)
 
-let rec divide = ()
+let rec divide k list =
+  match (k, list) with
+  | (_, []) -> ([], [])
+  | (k, list) when k <= 0 -> ([], list)
+  | (k, head :: tails) ->
+      let (x, y) = divide (k-1) tails in
+      (head :: x, y)
 
 (*----------------------------------------------------------------------------*]
  Funkcija [rotate n list] seznam zavrti za [n] mest v levo. Predpostavimo, da
@@ -124,7 +135,10 @@ let rec divide = ()
  - : int list = [3; 4; 5; 1; 2]
 [*----------------------------------------------------------------------------*)
 
-let rec rotate = ()
+let rec rotate n list =
+  if n = 0 then list else
+  match list with
+    | head :: tails -> rotate (n-1) (tails @ [head])
 
 (*----------------------------------------------------------------------------*]
  Funkcija [remove x list] iz seznama izbriše vse pojavitve elementa [x].
@@ -133,7 +147,14 @@ let rec rotate = ()
  - : int list = [2; 3; 2; 3]
 [*----------------------------------------------------------------------------*)
 
-let rec remove = ()
+let rec remove x list =
+  match list with
+    | head :: tails -> 
+      if head = x then
+        remove x tails
+      else
+        head :: remove x tails
+    | [] -> []
 
 (*----------------------------------------------------------------------------*]
  Funkcija [is_palindrome] za dani seznam ugotovi ali predstavlja palindrom.
@@ -145,7 +166,13 @@ let rec remove = ()
  - : bool = false
 [*----------------------------------------------------------------------------*)
 
-let rec is_palindrome = ()
+let rec obrni_seznam list =
+  match list with
+    | head :: tails -> obrni_seznam tails @ [head]
+    | [] -> []
+
+let is_palindrome list =
+  list = obrni_seznam list
 
 (*----------------------------------------------------------------------------*]
  Funkcija [max_on_components] sprejme dva seznama in vrne nov seznam, katerega
@@ -156,7 +183,11 @@ let rec is_palindrome = ()
  - : int list = [5; 4; 3; 3; 4]
 [*----------------------------------------------------------------------------*)
 
-let rec max_on_components = ()
+let rec max_on_components list1 list2 =
+  match (list1, list2) with
+    | (head1 :: tails1, head2 :: tails2) -> max head1 head2 :: max_on_components tails1 tails2
+    | ([], _) -> []
+    | (_, []) -> []
 
 (*----------------------------------------------------------------------------*]
  Funkcija [second_largest] vrne drugo največjo vrednost v seznamu. Pri tem se
@@ -168,4 +199,13 @@ let rec max_on_components = ()
  - : int = 10
 [*----------------------------------------------------------------------------*)
 
-let rec second_largest = ()
+let rec largest list =
+  match list with
+    | head :: tails when tails = [] -> head
+    | head :: tails -> max head (largest tails)
+    | [] -> failwith "prazen seznam"
+
+let rec second_largest list =
+  let max_element = largest list in
+  let new_list = remove max_element list in
+  largest new_list
