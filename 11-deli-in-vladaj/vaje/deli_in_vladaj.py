@@ -27,7 +27,15 @@
 #     [10, 2, 0, 4, 11, 15, 17, 5, 18]
 ###############################################################################
 
-
+def pivot(a, start, end):
+    piv = a[start]
+    first_bigger = start + 1
+    for i in range(start + 1, end + 1):
+        if a[i] < piv:
+            a[i], a[first_bigger] = a[first_bigger], a[i]
+            first_bigger += 1
+    a[start], a[first_bigger - 1] = a[first_bigger - 1], a[start]
+    return first_bigger - 1
 
 ###############################################################################
 # V tabeli želimo poiskati vrednost k-tega elementa po velikosti.
@@ -60,8 +68,6 @@
 #     [2, 3, 4, 5, 10, 11, 15, 17, 18]
 ###############################################################################
 
-
-
 ###############################################################################
 # Če imamo dve urejeni tabeli, potem urejeno združeno tabelo dobimo tako, da
 # urejeni tabeli zlijemo. Pri zlivanju vsakič vzamemo manjšega od začetnih
@@ -85,7 +91,21 @@
 #
 ###############################################################################
 
-
+def zlij(target, begin, end, list_1, list_2):
+    i_list_1 = 0
+    i_list_2 = 0
+    for j in range(begin, end):
+        if i_list_1 == len(list_1):
+            target[j : (end + 1)] = list_2[i_list_2:]
+        elif i_list_2 == len(list_2):
+            target[j : (end + 1)] = list_1[i_list_1:]
+        else:
+            if list_1[i_list_1] > list_2[i_list_2]:
+                target[j] = list_2[i_list_2]
+                i_list_2 += 1
+            else:
+                target[j] = list_1[i_list_1]
+                i_list_1 += 1
 
 ###############################################################################
 # Tabelo želimo urediti z zlivanjem (merge sort). 
@@ -102,3 +122,4 @@
 # >>> mergesort(a)
 # [2, 3, 4, 5, 10, 11, 15, 17, 18]
 ###############################################################################
+
